@@ -1,0 +1,110 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 Profilo Utente
+
+  form.form-horizontal(action='/account/profile', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='email') Email
+      .col-sm-7
+        input.form-control(type='email', name='email', id='email', value=user.email)
+    .form-group
+      label.col-sm-3.control-label(for='name') Nome
+      .col-sm-7
+        input.form-control(type='text', name='name', id='name', value=user.profile.name)
+    .form-group
+      label.col-sm-3.control-label(for='partitaiva') Partita IVA
+      .col-sm-7
+        input.form-control(type='text', name='partitaiva', id='partitaiva', value=user.profile.partitaiva)
+    .form-group
+      label.col-sm-3.control-label Sesso
+      .col-sm-6
+        label.radio.col-sm-3
+          input(type='radio', checked=user.profile.gender=='male', name='gender', value='male', data-toggle='radio')
+          span Uomo
+        label.radio.col-sm-3
+          input(type='radio', checked=user.profile.gender=='female', name='gender', value='female', data-toggle='radio')
+          span Donna
+        label.radio.col-sm-3
+          input(type='radio', checked=user.profile.gender=='other', name='gender', value='other', data-toggle='radio')
+          span Altro
+    .form-group
+      label.col-sm-3.control-label(for='location') Città
+      .col-sm-7
+        input.form-control(type='text', name='location', id='location', value=user.profile.location)
+    .form-group
+      label.col-sm-3.control-label(for='website') Website
+      .col-sm-7
+        input.form-control(type='text', name='website', id='website', value=user.profile.website)
+    .form-group
+      label.col-sm-3.control-label Gravatar
+      .col-sm-4
+        img(src=user.gravatar(), class='profile', width='100', height='100')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-pencil
+          | Aggiorna il Profilo
+
+  .page-header
+    h3 Modifica Password
+
+  form.form-horizontal(action='/account/password', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='password') Nuova Password
+      .col-sm-7
+        input.form-control(type='password', name='password', id='password')
+    .form-group
+      label.col-sm-3.control-label(for='confirmPassword') Conferma Password
+      .col-sm-7
+        input.form-control(type='password', name='confirmPassword', id='confirmPassword')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn-primary(type='submit')
+          i.fa.fa-lock
+          | Modifica Password
+
+  // .page-header
+  //   h3 Delete Account
+
+  // form.form-horizontal(action='/account/delete', method='POST')
+  //   .form-group
+  //     p.col-sm-offset-3.col-sm-4 You can delete your account, but keep in mind this action is irreversible.
+  //     input(type='hidden', name='_csrf', value=_csrf)
+  //     .col-sm-offset-3.col-sm-4
+  //       button.btn.btn-danger(type='submit')
+  //         i.fa.fa-trash
+  //         | Delete my account
+
+  .page-header
+    h3 Account Associati
+  .form-horizontal
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        if user.instagram
+          p: a.text-danger(href='/account/unlink/instagram') Dissocia il tuo Instagram account
+        else
+          p: a(href='/auth/instagram') Associa il tuo Instagram account
+      .col-sm-offset-3.col-sm-4
+        if user.google
+          p: a.text-danger(href='/account/unlink/google') Dissocia il tuo Google account
+        else
+          p: a(href='/auth/google') Associa il tuo Google account
+      .col-sm-offset-3.col-sm-4
+        if user.facebook
+          p: a.text-danger(href='/account/unlink/facebook') Dissocia il tuo Facebook account
+        else
+          p: a(href='/auth/facebook') Associa il tuo Facebook account
+      .col-sm-offset-3.col-sm-4
+        if user.twitter
+          p: a.text-danger(href='/account/unlink/twitter') Dissocia il tuo Twitter account
+        else
+          p: a(href='/auth/twitter') Associa il tuo Twitter account
+      .col-sm-offset-3.col-sm-4
+        if user.linkedin
+          p: a.text-danger(href='/account/unlink/linkedin') Dissocia il tuo LinkedIn account
+        else
+          p: a(href='/auth/linkedin') Associa il tuo LinkedIn account
